@@ -1,7 +1,6 @@
 var get = (url) => {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest()
-
         xhr.onreadystatechange = () => {
             if (xhr.readyState == 4) {
                 if (xhr.status === 200) {
@@ -28,23 +27,21 @@ var catchError = (e) => {
 }
 
 var getPosts = (success, error) => {
-    get('http:/jsonplaceholder.typicode.com/users')
-        .then(function (response) {
-            var users = JSON.parse(response)
-            console.log(users[0]);
-            get('http:/jsonplaceholder.typicode.com/comments?usersId=' + users[0].id)
-                .then(function (response) {
-                    var posts = JSON.parse(response)
-                    console.log(posts[0])
-                })
-                .catch(catchError)
-        }).catch(catchError)
+    return new Promise((resolve, reject) => {
+        get('http:/jsonplaceholder.typicode.com/users')
+            .then((response) => {
+                var users = JSON.parse(response)
+                get('http:/jsonplaceholder.typicode.com/comments?usersId=' + users[0].id)
+                    .then((response) => {
+                        var posts = JSON.parse(response)
+                        resolve(posts[0])
+                    })
+                    .catch(catchError)
+            }).catch(catchError)
+    })
 }
 
-getPosts();
-
-/* getPosts(function (posts) {
-    console.log('premier', posts[0]);
-}, function (error) {
-    console.log(error);
-}); */
+getPosts()
+    .then((resp) => {
+        console.log(resp);
+    })
