@@ -26,7 +26,7 @@ var catchError = (e) => {
     console.error(e);
 }
 
-var getPosts = (success, error) => {
+/* var getPosts = () => {
     return new Promise((resolve, reject) => {
         get('http:/jsonplaceholder.typicode.com/users')
             .then((response) => {
@@ -39,9 +39,22 @@ var getPosts = (success, error) => {
                     .catch(catchError)
             }).catch(catchError)
     })
+} */
+
+var getPosts = () => {
+    return get('http:/jsonplaceholder.typicode.com/users')
+        .then((resp) => {
+            var users = JSON.parse(resp);
+            return get('http:/jsonplaceholder.typicode.com/comments?usersId=' + users[0].id)
+                .then((posts => {
+                    var posts = JSON.parse(posts)
+                    return posts
+                }))
+        })
 }
 
 getPosts()
-    .then((resp) => {
-        console.log(resp);
+    .then((posts) => {
+        console.log(posts[1]);
     })
+    .catch(catchError)
