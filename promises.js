@@ -23,19 +23,22 @@ var get = (url) => {
     console.log(error);
 }) */
 
+var catchError = (e) => {
+    console.error(e);
+}
+
 var getPosts = (success, error) => {
-    get('http:/jsonplaceholder.typicode.com/users').then(function (response) {
-        var users = JSON.parse(response)
-        console.log(users[0]);
-        /*  get('http:/jsonplaceholder.typicode.com/comments?usersId=' + users[0].id, function (response) {
-             var posts = JSON.parse(response)
-             success(posts)
-         }, function (e) {
-             console.log('ajax error', e);
-         }) */
-    }).catch(function (e) {
-        console.log('users error', e);
-    })
+    get('http:/jsonplaceholder.typicode.com/users')
+        .then(function (response) {
+            var users = JSON.parse(response)
+            console.log(users[0]);
+            get('http:/jsonplaceholder.typicode.com/comments?usersId=' + users[0].id)
+                .then(function (response) {
+                    var posts = JSON.parse(response)
+                    console.log(posts[0])
+                })
+                .catch(catchError)
+        }).catch(catchError)
 }
 
 getPosts();
