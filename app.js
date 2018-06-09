@@ -1,10 +1,9 @@
-var get = (url) => {
+var get = (url, success) => {
     var xhr = new XMLHttpRequest()
 
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4) {
-            console.log(xhr.responseText);
-
+            success(xhr.responseText);
         }
     }
     xhr.open('GET', url, true)
@@ -12,7 +11,9 @@ var get = (url) => {
 }
 
 var getPosts = () => {
-    var users = get('http:/jsonplaceholder.typicode.com/users')
+    get('http:/jsonplaceholder.typicode.com/users', function(response) {
+        console.log(response);
+    })
 }
 
 console.log(getPosts());
