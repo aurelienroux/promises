@@ -14,17 +14,25 @@ var get = (url, success, error) => {
     xhr.send()
 }
 
-var getPosts = () => {
-    get('http:/jsonplaceholder.typicode.com/usersss', function(response) {
-        console.log('this is success');
+var getPosts = (success, error) => {
+    get('http:/jsonplaceholder.typicode.com/users', function(response) {
         var users = JSON.parse(response)
-        console.log(users[0]);
+        console.log(users);
+        get('http:/jsonplaceholder.typicode.com/comments?usersId=' + users[0].id, function(response) {
+            var posts = JSON.parse(response)
+            success(posts)
+        }, function(error) {
+            console.log(error);
+        })
     }, function(error) {
-        console.log('this is error');
         console.log(error);
     })
 }
 
-console.log(getPosts());
+getPosts(function(posts) {
+    console.log('premier', posts[0]);
+}, function(error) {
+    console.log(error);
+});
 
 
