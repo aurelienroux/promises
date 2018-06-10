@@ -27,9 +27,12 @@ var getPosts = async () => {
     return posts
 }
 
-// console.log(getPosts());
+var getFirstPost = async (num) => {
+    var post = await getPosts();
+    return post[num];
+}
 
-getPosts()
-    .then((posts) => console.log(posts[1]))
+getFirstPost(0)
+    .then((post) => console.log(post))
     .catch(catchError)
     .then(() => console.log('requests ending'))
