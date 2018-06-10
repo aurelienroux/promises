@@ -18,7 +18,7 @@ var getPosts = (success, error) => {
     get('http:/jsonplaceholder.typicode.com/users', function (response) {
         var users = JSON.parse(response)
         console.log(users);
-        get('http:/jsonplaceholder.typicode.com/commensssts?usersId=' + users[0].id, function (response) {
+        get('http:/jsonplaceholder.typicode.com/comments?usersId=' + users[0].id, function (response) {
             var posts = JSON.parse(response)
             success(posts)
         }, function (e) {

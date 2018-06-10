@@ -15,23 +15,23 @@ var get = (url) => {
     })
 }
 
-var catchError = (e) => {
+var catchError = e => {
     console.error(e);
 }
 
 var getPosts = () => {
     return get('http:/jsonplaceholder.typicode.com/users')
-        .then((resp) => {
+        .then(resp => {
             var users = JSON.parse(resp);
             return get('http:/jsonplaceholder.typicode.com/comments?usersId=' + users[0].id)
-                .then((posts => {
+                .then(posts => {
                     var posts = JSON.parse(posts)
                     return posts
-                }))
+                })
         })
 }
 
 getPosts()
-    .then((posts) => console.log(posts[1]))
+    .then(posts => console.log(posts[1]))
     .catch(catchError)
     .then(() => console.log('requests ending'))

@@ -1,4 +1,4 @@
-var get = (url) => {
+var get = url => {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest()
         xhr.onreadystatechange = () => {
@@ -15,7 +15,7 @@ var get = (url) => {
     })
 }
 
-var catchError = (e) => {
+var catchError = e => {
     console.error(e);
 }
 
@@ -31,7 +31,7 @@ var getPosts = async () => {
     return posts
 }
 
-var getFirstPost = async (num) => {
+var getFirstPost = async num => {
     var post = await getPosts();
     return post[num];
 }
