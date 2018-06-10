@@ -32,7 +32,9 @@ var getFirstPost = async (num) => {
     return post[num];
 }
 
-getFirstPost(0)
-    .then((post) => console.log(post))
-    .catch(catchError)
-    .then(() => console.log('requests ending'))
+var demo = async () => {
+    var arr = await Promise.all([getPosts(), getFirstPost(0)])
+    console.log(arr);
+}
+
+demo()
