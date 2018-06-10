@@ -20,10 +20,14 @@ var catchError = (e) => {
 }
 
 var getPosts = async () => {
-    var response = await get('http:/jsonplaceholder.typicode.com/users')
-    var users = JSON.parse(response);
-    response = await get('http:/jsonplaceholder.typicode.com/comments?usersId=' + users[0].id)
-    var posts = JSON.parse(response)
+    try {
+        var response = await get('http:/jsonplaceholder.typicode.com/users')
+        var users = JSON.parse(response);
+        response = await get('http:/jsonplaceholder.typicode.com/comments?usersId=' + users[0].id)
+        var posts = JSON.parse(response)
+    } catch (error) {
+        console.log('try catch error', error);
+    }
     return posts
 }
 
